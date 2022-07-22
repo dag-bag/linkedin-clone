@@ -58,11 +58,13 @@ function Post({ post, modalPost }) {
           <h6 className="font-medium hover:text-blue-500 hover:underline pt-3">
             {post.username}
           </h6>
-          <p className="text-xs text-white/70 opacity-80">{post.email}</p>
+          <p className="text-xs text-gray-700 dark:text-white/70 opacity-80">
+            {post.email}
+          </p>
           <TimeAgo
             datetime={post.createdAtPost}
             locale="vi"
-            className="text-xs text-white/70 opacity-80"
+            className="text-xs text-gray-700 dark:text-white/70 opacity-80"
           />
         </div>
         {modalPost ? (
