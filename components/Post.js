@@ -15,6 +15,8 @@ import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import { modalState, modalTypeState } from "../atoms/modelAtoms";
 import { useSession } from "next-auth/react";
 import TimeAgo from "timeago-react";
+import PostMenu from "./PostMenu";
+
 // import TimeAgo from "timeago-react";
 function Post({ post, modalPost }) {
   const { data: session } = useSession();
@@ -25,6 +27,7 @@ function Post({ post, modalPost }) {
   const [modalType, setModalType] = useRecoilState(modalTypeState);
   const [postState, setPostState] = useRecoilState(getPostState);
   const [handlePost, setHandlePost] = useRecoilState(handlePostState);
+  const [postMenu, setPostMenu] = useState(false);
   const [liked, setLiked] = useState(false);
   const deletePost = async (id) => {
     const response = await fetch("/api/post", {
@@ -71,6 +74,27 @@ function Post({ post, modalPost }) {
           <IconButton onClick={() => setModalOpen(false)}>
             <CloseRoundedIcon className="dark:text-white/75 h-7 w-7" />
           </IconButton>
+        ) : session.user.email === post.email ? (
+          <div className="relative">
+            <IconButton
+              onClick={() => {
+                setPostMenu(!postMenu);
+              }}
+            >
+              <MoreHorizRoundedIcon className="dark:text-white/75 h-7 w-7" />
+            </IconButton>
+            {postMenu && (
+              <div
+                onClick={() => {
+                  setModalOpen(true);
+                  setModalType("editIn");
+                  setPostState(post);
+                }}
+              >
+                <PostMenu />
+              </div>
+            )}
+          </div>
         ) : (
           <IconButton>
             <MoreHorizRoundedIcon className="dark:text-white/75 h-7 w-7" />

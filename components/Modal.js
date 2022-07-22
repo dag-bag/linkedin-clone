@@ -10,6 +10,7 @@ import Form from "./Form";
 import { useRecoilValue } from "recoil";
 import { getPostState } from "../atoms/postAtom";
 import Post from "./Post";
+import UpdateForm from "./UpdateForm";
 
 const dropIn = {
   hidden: {
@@ -84,6 +85,32 @@ const Modal = ({ handleClose, type }) => {
             </div>
 
             <Form />
+          </div>
+        </motion.div>
+      )}
+      {type === "editIn" && (
+        <motion.div
+          onClick={(e) => e.stopPropagation()}
+          className="rounded-xl flex flex-col justify-center bg-white dark:bg-[#1D2226] w-full max-w-lg md:-mt-96 mx-6"
+          variants={dropIn}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+        >
+          <div className="flex items-center justify-between border-b border-white/75 px-4 py-2.5">
+            <h4 className="text-xl">Edit Post</h4>
+            <IconButton onClick={handleClose}>
+              <CloseRoundedIcon className="h-7 w-7 dark:text-white/75" />
+            </IconButton>
+          </div>
+
+          <div className="p-4 space-y-2">
+            <div className="flex items-center space-x-2">
+              <Avatar src={session?.user?.image} className="!h-11 !w-11" />
+              <h6>{session?.user?.name}</h6>
+            </div>
+
+            <UpdateForm post={post} />
           </div>
         </motion.div>
       )}

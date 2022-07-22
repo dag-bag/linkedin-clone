@@ -5,23 +5,21 @@ import React, { useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { modalState } from "../atoms/modelAtoms";
 import { handlePostState } from "../atoms/postAtom";
-function Form({ post }) {
+function UpdateForm({ post }) {
   const { data: session } = useSession();
   const [handlePost, setHandlePost] = useRecoilState(handlePostState);
   const setModalOpen = useSetRecoilState(modalState);
-  const [TextArea, setTextArea] = useState("");
-  const [photoUrl, setPhotoUrl] = useState("");
+  const [TextArea, setTextArea] = useState(post.title);
+  const [photoUrl, setPhotoUrl] = useState(post.imgUrl);
   const upLoadPost = async (e) => {
     e.preventDefault();
 
     const response = await fetch("/api/post", {
-      method: "POST",
+      method: "PUT",
       body: JSON.stringify({
+        _id: post._id,
         title: TextArea,
         imgUrl: photoUrl,
-        username: session.user.name,
-        email: session.user.email,
-        userImg: session.user.image,
         createdAtPost: new Date().getTime().toString(),
       }),
       headers: {
@@ -58,10 +56,10 @@ function Form({ post }) {
         disabled={!TextArea.trim() && !photoUrl.trim()}
         onClick={upLoadPost}
       >
-        Post
+        Update
       </button>
     </form>
   );
 }
 
-export default Form;
+export default UpdateForm;
