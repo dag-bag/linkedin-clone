@@ -31,7 +31,7 @@ const headerItems = [
   {
     text: "My Network",
     icon: MdPeople,
-    hidden: false,
+    hidden: true,
   },
 
   {
@@ -89,7 +89,7 @@ function Header() {
       </div>
       {/* Right */}
       <div>
-        <div className=" flex sm:flex space-x-8 pr-4 ">
+        <div className=" flex sm:flex md:space-x-8 md:pr-4 space-x-4">
           {headerItems.map((item) => {
             return (
               <HeaderLink
@@ -107,7 +107,7 @@ function Header() {
           {/* Dark mode toggle */}
           {mounted && (
             <div
-              className={`mt-2.5 bg-gray-600 flex items-center px-0.5 rounded-full h-6 w-12 cursor-pointer flex-shrink-0 relative ${
+              className={` md:mt-2.5 bg-gray-600 flex items-center px-0.5 rounded-full h-6 w-12 cursor-pointer flex-shrink-0 relative ${
                 resolvedTheme === "dark" ? "justify-end" : "justify-start"
               }`}
               onClick={() =>
