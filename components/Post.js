@@ -45,6 +45,10 @@ function Post({ post, modalPost }) {
     setModalOpen(false);
   };
 
+  const obscureEmail = (email) => {
+    const [name, domain] = email.split("@");
+    return `${name[0]}${new Array(name.length).join("*")}@${domain}`;
+  };
   return (
     <div
       className={`bg-white dark:bg-[#1D2226] ${
@@ -61,8 +65,8 @@ function Post({ post, modalPost }) {
           <h6 className="font-medium hover:text-blue-500 hover:underline pt-3">
             {post.username}
           </h6>
-          <p className="text-xs text-gray-700 dark:text-white/70 opacity-80">
-            {post.email}
+          <p className="text-xs text-gray-700 dark:text-white/70 opacity-80 ">
+            {obscureEmail(post.email)}
           </p>
           <TimeAgo
             datetime={post.createdAtPost}
